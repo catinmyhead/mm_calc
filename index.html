@@ -1,0 +1,114 @@
+<html>
+	<head>
+		<title>Калькулятор</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<script type="text/javascript">
+			const calculate = ( n1, op, n2 )  => {
+				console.log('calculate() called!', n1, op, n2);
+				let result = 0;
+				n1 = parseFloat(n1);
+				n2 = parseFloat(n2);
+				calc.secondNum = n1;
+				if ( op == 'add' ) {
+					result =  n1 + n2;
+				} else if ( op == 'substract' ) {
+					result = n1 - n2;
+				} else if ( op == 'multiply' ) {
+					result = n1 * n2;
+				} else if ( op == 'divide' ) {
+					result = n1 / n2;
+				}
+				return result.toString();
+			};
+			const clear = () => {
+				calc.previousValue = null;
+				calc.previousKeyType = null;
+				display.textContent = 0;
+			};
+			document.addEventListener("DOMContentLoaded", function() {
+				const calc = document.querySelector('#calc');
+				calc.editable = true;
+				const display = calc.querySelector('#display');
+				display.textContent = 0;
+				const keys = calc.querySelectorAll('.btn');
+				const actions = ['add', 'substract', 'multiply', 'divide'];
+				document.onkeypress = function (e) {
+					e = e || window.event;
+					console.log(e.keyCode);
+					if ( e.keyCode == 99 ) {
+						clear();
+					}
+				};
+				Array.prototype.forEach.call(keys, function(el) {
+					el.addEventListener('click', e => {
+						const displayedNum = display.textContent;
+						const key = e.target;
+						const action = key.dataset.action;
+						const keyContent = key.textContent;
+						if ( action ) {
+							if ( action == 'calc' ) {
+								console.log(calc.previousValue, displayedNum);
+								display.textContent = calculate(calc.previousValue, calc.previousKeyType, displayedNum);
+								calc.editable = false;
+							}
+							if ( action == 'clear' ) {
+								clear();
+							}
+							if ( action == 'decimal' && ! display.textContent.includes('.')) {
+								display.textContent = displayedNum + '.';
+							}
+							if (actions.indexOf(action) >= 0) {
+								calc.previousValue = display.textContent;
+								calc.previousKeyType = action;
+								display.textContent = keyContent;
+							}
+						} else {
+							if ( displayedNum === '0') {
+								display.textContent = keyContent;
+							} else {
+								if ( actions.indexOf(calc.previousKeyType) >= 0 ) {
+									display.textContent = keyContent;
+								} else {
+									if (calc.editable) {
+										display.textContent = displayedNum + keyContent;
+									} else {
+										display.textContent = keyContent;
+									}
+									calc.editable = true;
+								}
+							}
+						}
+					});
+				});
+			 });
+		</script>
+	</head>
+	<body>
+		<div class="round" id="calc">
+			<div id="display">&nbsp;</div>
+			<div class="numbers">
+				<div class="btn round">1</div>
+				<div class="btn round">2</div>
+				<div class="btn round">3</div>
+				<div class="btn round">4</div>
+				<div class="btn round">5</div>
+				<div class="btn round">6</div>
+				<div class="btn round">7</div>
+				<div class="btn round">8</div>
+				<div class="btn round">9</div>
+				<div class="btn round">0</div>
+				<div class="btn round" data-action="decimal">.</div>
+				<div class="btn round" data-action="clear">C</div>
+			</div>
+			<div class="actions">
+				<div class="btn round" data-action="divide">&divide;</div>
+				<div class="btn round" data-action="multiply">&times;</div>
+				<div class="btn round" data-action="add">+</div>
+				<div class="btn round" data-action="substract">-</div>
+			</div>
+			<div class="res">
+				<div class="btn res round" data-action="calc">=</div>
+			</div>
+		</div>
+	</body>
+</html>

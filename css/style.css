@@ -1,0 +1,63 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+body {
+	background: #D8E5E5;
+}
+.round {
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+#calc {
+	width: 210px;
+	height: 250px;
+	display: block;
+	background: #383C3D;
+	padding: 10px;
+	float: left;
+	border: 1px solid #000;
+	margin: 40px;
+}
+#display {
+	background: #D1E3A8;
+	border: 5px solid #323434;
+	font-size: 24px;
+	text-align: right;
+	padding-right: 5px;
+	margin: 10px;
+	line-height: 36px;
+	overflow: hidden;
+}
+.numbers .btn{
+	background: #252525;
+}
+.actions .btn{
+	background: #FC5771;
+}
+.res {
+	background: #FDB039 !important;
+	margin-left: 10px;
+}
+.btn {
+	cursor: pointer;
+	float: left;
+	width: 36px;
+	height: 24px;
+	border: 1px solid #000;
+	margin: 5px;
+	text-align: center;
+	line-height: 24px;
+	vertical-align: middle;
+	color: #FCEBEB;
+}
+.numbers {
+	float: left;
+	width: 145px;
+	padding-left: 10px;
+}
+.actions {
+	float: left;
+	width: 44px;
+}
