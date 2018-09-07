@@ -8,7 +8,7 @@
 				let result = 0;
 				n1 = parseFloat(n1);
 				n2 = parseFloat(n2);
-				calc.secondNum = n1;
+				calc.secondNum = n2;
 				if ( op == 'add' ) {
 					result =  n1 + n2;
 				} else if ( op == 'substract' ) {
@@ -24,6 +24,7 @@
 				calc.previousValue = null;
 				calc.previousKeyType = null;
 				display.textContent = 0;
+				calc.secondNum = null;
 			};
 			document.addEventListener("DOMContentLoaded", function() {
 				const calc = document.querySelector('#calc');
@@ -48,7 +49,11 @@
 						if ( action ) {
 							if ( action == 'calc' ) {
 								console.log(calc.previousValue, displayedNum);
-								display.textContent = calculate(calc.previousValue, calc.previousKeyType, displayedNum);
+								if ( ! calc.secondNum ) {
+									display.textContent = calculate(calc.previousValue, calc.previousKeyType, displayedNum);
+								} else {
+									display.textContent = calculate(displayedNum, calc.previousKeyType, calc.secondNum);
+								}
 								calc.editable = false;
 							}
 							if ( action == 'clear' ) {
