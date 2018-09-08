@@ -8,7 +8,8 @@
 				let result = 0;
 				n1 = parseFloat(n1);
 				n2 = parseFloat(n2);
-				calc.secondNum = n2;
+				calc.n1 = n1;
+				calc.n2 = n2;
 				if ( op == 'add' ) {
 					result =  n1 + n2;
 				} else if ( op == 'substract' ) {
@@ -18,13 +19,15 @@
 				} else if ( op == 'divide' ) {
 					result = n1 / n2;
 				}
+				calc.n1 = result;
 				return result.toString();
 			};
 			const clear = () => {
-				calc.previousValue = null;
 				calc.previousKeyType = null;
+				calc.editable = true;
 				display.textContent = 0;
-				calc.secondNum = null;
+				calc.n1 = null;
+				calc.n2 = null;
 			};
 			document.addEventListener("DOMContentLoaded", function() {
 				const calc = document.querySelector('#calc');
@@ -40,7 +43,7 @@
 						clear();
 					}
 				};
-				Array.prototype.forEach.call(keys, function(el) {
+				Array.prototype.forEach.call(keys, function( el ) {
 					el.addEventListener('click', e => {
 						const displayedNum = display.textContent;
 						const key = e.target;
@@ -48,38 +51,40 @@
 						const keyContent = key.textContent;
 						if ( action ) {
 							if ( action == 'calc' ) {
-								console.log(calc.previousValue, displayedNum);
-								if ( ! calc.secondNum ) {
-									display.textContent = calculate(calc.previousValue, calc.previousKeyType, displayedNum);
-								} else {
-									display.textContent = calculate(displayedNum, calc.previousKeyType, calc.secondNum);
-								}
+								console.log(calc.n1, calc.n2);
+									if ( ! calc.n2 ) {
+										calc.n2 = display.textContent;
+									}
+									display.textContent = calculate(calc.n1, calc.previousKeyType, calc.n2);
 								calc.editable = false;
 							}
 							if ( action == 'clear' ) {
 								clear();
 							}
-							if ( action == 'decimal' && ! display.textContent.includes('.')) {
+							if ( action == 'decimal' && ! display.textContent.includes('.') ) {
 								display.textContent = displayedNum + '.';
 							}
-							if (actions.indexOf(action) >= 0) {
-								calc.previousValue = display.textContent;
+							if ( actions.indexOf(action) >= 0 ) {
+								calc.n1 = display.textContent;
 								calc.previousKeyType = action;
 								display.textContent = keyContent;
 							}
 						} else {
-							if ( displayedNum === '0') {
+							if ( displayedNum === '0' ) {
 								display.textContent = keyContent;
 							} else {
 								if ( actions.indexOf(calc.previousKeyType) >= 0 ) {
-									display.textContent = keyContent;
+									if ( ! parseFloat(displayedNum) ) {
+										display.textContent = keyContent;
+									} else if ( calc.editable ) {
+										display.textContent = displayedNum + keyContent;
+									}
 								} else {
-									if (calc.editable) {
+									if ( calc.editable ) {
 										display.textContent = displayedNum + keyContent;
 									} else {
 										display.textContent = keyContent;
 									}
-									calc.editable = true;
 								}
 							}
 						}

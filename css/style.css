@@ -29,6 +29,7 @@ body {
 	margin: 10px;
 	line-height: 36px;
 	overflow: hidden;
+	white-space: nowrap;
 }
 .numbers .btn{
 	background: #252525;
