@@ -4,7 +4,7 @@
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 		<script type="text/javascript">
 			const calculate = ( n1, op, n2 )  => {
-				console.log('calculate() called!', n1, op, n2);
+				// console.log('calculate() called!', n1, op, n2);
 				let result = 0;
 				n1 = parseFloat(n1);
 				n2 = parseFloat(n2);
@@ -51,7 +51,6 @@
 						const keyContent = key.textContent;
 						if ( action ) {
 							if ( action == 'calc' ) {
-								console.log(calc.n1, calc.n2);
 									if ( ! calc.n2 ) {
 										calc.n2 = display.textContent;
 									}
